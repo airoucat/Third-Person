@@ -206,6 +206,9 @@ public final class ThirdPersonEvents {
       var lookImpulse = LMath.toVector3d(camera.getLookVector()).normalize();
       var leftImpulse = LMath.toVector3d(camera.getLeftVector()).normalize();
 
+      ThirdPerson.FINITE_CHECKER.checkOnce(lookImpulse.x, lookImpulse.y, lookImpulse.z);
+      ThirdPerson.FINITE_CHECKER.checkOnce(leftImpulse.x, leftImpulse.y, leftImpulse.z);
+
       // 水平方向上的视线向量
       var lookImpulseHorizon =
           new Vector2d(lookImpulse.x, lookImpulse.z).normalize(event.forwardImpulse);
@@ -235,6 +238,9 @@ public final class ThirdPersonEvents {
 
         event.forwardImpulse = (float) (ThirdPersonStatus.impulseHorizon.dot(playerLookHorizon));
         event.leftImpulse = (float) (ThirdPersonStatus.impulseHorizon.dot(playerLeftHorizon));
+
+        ThirdPerson.FINITE_CHECKER.checkOnce(event.forwardImpulse);
+        ThirdPerson.FINITE_CHECKER.checkOnce(event.leftImpulse);
       }
     }
   }
