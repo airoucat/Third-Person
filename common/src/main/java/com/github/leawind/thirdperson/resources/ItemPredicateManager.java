@@ -118,7 +118,7 @@ public class ItemPredicateManager extends SimpleJsonResourceReloadListener {
     if (ItemPredicateUtil.isInitialized()) {
       reparseImmediately();
     } else {
-      ItemPredicateUtil.ON_INITIALIZED.setOnce(
+      ItemPredicateUtil.ON_INITIALIZED.once(
           "Item predicates in resource", e -> reparseImmediately());
     }
   }
