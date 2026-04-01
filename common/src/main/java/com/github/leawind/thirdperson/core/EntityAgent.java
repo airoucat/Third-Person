@@ -170,6 +170,9 @@ public class EntityAgent {
 
   /** 设置实体朝向 */
   public void setRawRotation(@NotNull Vector2d rot) {
+    if (!Double.isFinite(rot.x) || !Double.isFinite(rot.y)) {
+      rot = getRawRotation(1);
+    }
     FINITE_CHECKER.checkOnce(rot.x, rot.y);
     var entity = getRawPlayerEntity();
 
