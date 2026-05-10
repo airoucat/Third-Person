@@ -11,6 +11,7 @@
 - Leawind 第三人称相机、准星、pick、玩家透明和输入行为
 - 与下游兼容模组联调时需要稳定依赖的公共行为
 - repo-level harness 记忆层
+- graphify 代码图和本地 hooks 自动化
 
 ## Hard Constraints
 
@@ -19,6 +20,7 @@
 - 回填上游修复时必须保留 `gradle.properties` 中的 1.21.1 版本目标。
 - 共享文档只写 repo-relative 路径。
 - `passes` 只能在对应验证真实执行后改成 `true`。
+- graphify close-out 使用 `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`。
 
 ## Current Backport Baseline
 

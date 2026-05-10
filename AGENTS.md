@@ -27,14 +27,30 @@
 
 ## 默认工作流
 
-- 本仓库默认采用 `harness + ce` 作为 repo-level workflow。
+- 本仓库默认采用 `harness + ce + graphify` 作为 repo-level workflow。
 - repo 内记忆层固定在 `.third-person-builder/`。
 - 三段式默认映射：
   - `Planner -> ce:plan`
   - `Generator -> ce:work`
   - `Evaluator -> ce:review`
 - 每次开始、完成、返工或阻塞一个工作切片时，都向 `.third-person-builder/progress.md` 追加记录。
+- 只要本轮改动涉及代码文件，在宣告完成前必须执行：
+  - `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`
 - 没有实际验证前，不要把 `.third-person-builder/feature_list.json` 里的 `passes` 改成 `true`。
+
+## Graphify 本地自动化
+
+- `graphify-out/` 是本地生成物，不提交到 Git。
+- 仓库内版本化 hooks 位于 `.githooks/`，用于在本机的 `commit / checkout / merge / rebase` 后自动重建代码图。
+- 每台新机器 clone 或首次进入仓库后，只需要执行一次：
+  - `python scripts/dev/setup_graphify_local.py`
+- 这一步会：
+  - 自动安装或复用本机 `graphifyy`
+  - 配置本地 `git config core.hooksPath .githooks`
+  - 补齐本机 `.codex/hooks.json`
+  - 在本地尚无 `graphify-out/graph.json` 时自动生成首轮代码图
+- 手动重建入口统一使用：
+  - `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`
 
 ## 工作规则
 
@@ -43,6 +59,7 @@
 - 机器相关路径只写到 `AGENTS.win.md`。
 - 涉及版本迁移时，先确认 `gradle.properties` 中的 `minecraft_version`、`minecraft_version_max`、`neoforge_version` 是否仍符合 1.21.1 维护目标。
 - 涉及相机、准星、人物渲染、输入或 pick 行为时，先读 `docs/current-truth/README.md` 的 source map，再决定改哪个模块。
+- `graphify-out/` 只作为上下文加速，不替代 `docs/current-truth/` 或 `.third-person-builder/`。
 
 ## 快速路由
 
@@ -57,3 +74,16 @@
 
 - “构建全部平台”
   使用 `.\gradlew.bat build --no-daemon`，但需要确认 Fabric 和 NeoForge 两侧依赖都能下载。
+
+- “重建 graphify”
+  在仓库根目录执行 `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`。
+
+## graphify
+
+This project has a graphify knowledge graph at `graphify-out/`.
+
+Rules:
+- Before answering architecture or codebase questions, read `graphify-out/GRAPH_REPORT.md` for god nodes and community structure.
+- If `graphify-out/wiki/index.md` exists, navigate it instead of reading raw files.
+- Treat graphify as a context accelerator, not the source of truth over `docs/current-truth/` or `.third-person-builder/`.
+- After modifying code files in this session, run `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`.

@@ -26,3 +26,17 @@ git checkout 1.21
 ```
 
 如果 Gradle wrapper 下载失败，先确认 `gradle/wrapper/gradle-wrapper.properties` 中的镜像地址是否可访问。
+
+## Graphify
+
+首次进入仓库后安装本地 graphify 自动化：
+
+```powershell
+python scripts/dev/setup_graphify_local.py
+```
+
+手动重建代码图：
+
+```powershell
+python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout
+```

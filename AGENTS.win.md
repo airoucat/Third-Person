@@ -17,6 +17,8 @@
 - 当前 Gradle wrapper 使用 `gradle-8.11-bin.zip`。
 - wrapper 下载源已切到腾讯 Gradle 镜像：
   - `https://mirrors.cloud.tencent.com/gradle/gradle-8.11-bin.zip`
+- graphify 本地自动化入口：
+  - `python scripts/dev/setup_graphify_local.py`
 
 ## 推荐命令
 
@@ -30,6 +32,10 @@
   - `.\gradlew.bat :neoforge:runClient --no-daemon`
 - 检查 Git 状态：
   - `git status --short --branch`
+- 安装 / 修复 graphify 本地自动化：
+  - `python scripts/dev/setup_graphify_local.py`
+- 手动重建 graphify：
+  - `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`
 
 ## 下载排错
 

@@ -27,6 +27,9 @@ build/
 bin/
 run/
 .architectury-transformer/
+graphify-out/
+.codex/
+.history/
 
 # Forge MDK
 forge*changelog.txt

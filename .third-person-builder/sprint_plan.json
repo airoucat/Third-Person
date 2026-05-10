@@ -2,7 +2,7 @@
   "updatedAt": "2026-05-10",
   "activeSprint": {
     "id": "WF0-BUILD1-bootstrap",
-    "title": "Fork default branch bootstrap and Gradle mirror setup",
+    "title": "Fork default branch bootstrap, Gradle mirror setup, and Graphify",
     "status": "blocked",
     "goal": "Make the 1.21 branch usable as the fork's default 1.21.1 maintenance branch, with a repo-local harness and domestic Gradle wrapper mirror.",
     "scope": [
@@ -11,6 +11,7 @@
       "Create AGENTS entry docs",
       "Create current-truth docs",
       "Create .third-person-builder memory layer",
+      "Install repo-local graphify automation",
       "Record verification status honestly"
     ],
     "verification": [
@@ -18,11 +19,13 @@
       "gradle/wrapper/gradle-wrapper.properties points to the chosen mirror",
       "feature_list.json and sprint_plan.json parse as JSON",
       "git diff --check exits 0",
+      "python scripts/dev/setup_graphify_local.py installs hooks and can rebuild graphify-out",
       "attempt .\\gradlew.bat :neoforge:build --no-daemon"
     ],
     "exitCriteria": [
       "New sessions can find the fork target and workflow entrypoints",
       "The wrapper no longer downloads Gradle from services.gradle.org",
+      "Graphify local automation is installable from the repo root",
       "Build result or network blocker is recorded in progress.md"
     ],
     "blocker": "NeoForge build did not complete within the verification window after Maven mirror changes. Gradle wrapper mirror itself is confirmed working."

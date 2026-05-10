@@ -1,11 +1,12 @@
 # Third-Person Fork Builder Harness
 
-这是把 `harness + ce` 工作流落到 `airoucat/Third-Person` fork 后的默认说明。
+这是把 `harness + ce + graphify` 工作流落到 `airoucat/Third-Person` fork 后的默认说明。
 
 目标不是引入一组松散技能，而是把 repo 级执行协议固定下来：
 
 - `harness` 负责项目状态、完成定义和进度同步
 - `ce` 负责默认的规划、实现、审查执行
+- `graphify` 负责代码图和结构化上下文加速
 - `.third-person-builder/` 负责保存当前实施状态
 
 ## Related Docs
@@ -22,7 +23,7 @@
 | `planner` | 默认由 `ce:plan` 执行；确认当前维护目标、上游回填边界和验证入口 |
 | `generator` | 默认由 `ce:work` 执行；只实现当前切片范围内的代码、测试和必要文档 |
 | `evaluator` | 默认由 `ce:review` 执行；验证行为是否诚实、是否引入版本漂移或平台回归 |
-| `sync` | 同步更新 `.third-person-builder/feature_list.json`、`sprint_plan.json`、`progress.md` |
+| `sync` | 运行 graphify close-out，并同步更新 `.third-person-builder/feature_list.json`、`sprint_plan.json`、`progress.md` |
 | `memory layer` | `.third-person-builder/`，是 repo 内当前实施状态的默认记忆层 |
 
 ## Memory Layer
@@ -51,6 +52,7 @@
    - 对照当前切片声明的验证入口做审查
    - 优先找 MC/loader 版本漂移、Fabric/NeoForge 单侧损坏、mixin 注入漂移和验证不诚实
 4. `Sync`
+   - 若本轮涉及代码文件，先执行 `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`
    - 同步更新 `.third-person-builder/feature_list.json`
    - 同步更新 `.third-person-builder/sprint_plan.json`
    - 向 `.third-person-builder/progress.md` 追加记录
@@ -59,6 +61,7 @@
 
 - current truth 根目录始终是 `docs/current-truth/`
 - 记忆层始终是 `.third-person-builder/`
+- graphify 本地生成物始终是 `graphify-out/`，不提交到 Git
 - 当前默认主分支是 `1.21`
 - 当前目标版本是 `Minecraft 1.21.1 + NeoForge 21.1.145`
 - 从上游同步时，优先 cherry-pick 小而明确的修复提交
@@ -69,6 +72,7 @@
 常见验证入口：
 
 - `git diff --check`
+- `python scripts/dev/setup_graphify_local.py rebuild --reason manual-closeout`
 - `.\gradlew.bat :neoforge:build --no-daemon`
 - `.\gradlew.bat build --no-daemon`
 - `.\gradlew.bat :neoforge:runClient --no-daemon`
@@ -82,5 +86,6 @@
 
 - 当前范围内的代码、测试、文档已经落地
 - 已执行该切片声明的验证，并且结果可复述
+- 若本轮涉及代码文件，已执行 graphify close-out
 - `.third-person-builder/feature_list.json` 与 `.third-person-builder/sprint_plan.json` 状态一致
 - `.third-person-builder/progress.md` 记录了开始、结论和风险
