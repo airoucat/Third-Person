@@ -1,0 +1,59 @@
+{
+  "updatedAt": "2026-05-10",
+  "project": "airoucat/Third-Person",
+  "defaultBranch": "1.21",
+  "target": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.145",
+    "platforms": [
+      "fabric",
+      "neoforge"
+    ]
+  },
+  "units": [
+    {
+      "id": "WF0",
+      "title": "Harness + CE workflow bootstrap",
+      "status": "done",
+      "passes": {
+        "agents_entry": true,
+        "memory_layer": true,
+        "current_truth": true
+      },
+      "notes": "Bootstrapped on 2026-05-10. JSON parsing, conflict-marker scan, and git diff whitespace checks passed."
+    },
+    {
+      "id": "UPSTREAM1",
+      "title": "Backport latest safe upstream fixes to 1.21.1",
+      "status": "done",
+      "passes": {
+        "default_branch_set": true,
+        "version_target_preserved": true,
+        "safe_commits_backported": true
+      },
+      "notes": "1.21 branch is the fork default branch. Safe upstream fixes were backported without migrating the target MC version."
+    },
+    {
+      "id": "BUILD1",
+      "title": "Gradle wrapper mirror and build verification",
+      "status": "blocked",
+      "passes": {
+        "wrapper_mirror_configured": true,
+        "neoforge_build": false,
+        "full_build": false
+      },
+      "notes": "Gradle wrapper successfully downloaded Gradle 8.11 from Tencent mirror. NeoForge build remains blocked by dependency resolution / long-running Gradle configuration after Maven mirror changes."
+    },
+    {
+      "id": "RUNTIME1",
+      "title": "Runtime camera and interaction validation",
+      "status": "proposed",
+      "passes": {
+        "third_person_camera": false,
+        "crosshair_pick": false,
+        "aeronautics_sable_interop": false
+      },
+      "notes": "Track manual game validation for F5, camera movement, pick behavior, and known Aeronautics/Sable scenarios."
+    }
+  ]
+}

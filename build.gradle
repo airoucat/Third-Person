@@ -91,6 +91,21 @@ subprojects {
 	loom { silentMojangMappingsLicense() }
 	
 	repositories {
+		maven {
+			name 'Aliyun Public'
+			url 'https://maven.aliyun.com/repository/public'
+		}
+
+		maven {
+			name 'Aliyun Central'
+			url 'https://maven.aliyun.com/repository/central'
+		}
+
+		maven {
+			name 'Tencent Public'
+			url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/'
+		}
+
 		maven { url "https://maven.shedaniel.me/" }
 		
 		// YACL
